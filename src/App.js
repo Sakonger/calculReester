@@ -290,7 +290,7 @@ function App() {
 
 
     <button className='button' onClick={changeNumber}>меняем лицензию</button>
-    <input className='button inputDate' onChange={(e) => setInputDate(e.target.value)} type='number'></input>
+    <input placeholder='вводи дни' className='button inputDate' onChange={(e) => setInputDate(e.target.value)} type='number'></input>
     <button className='button' onClick={changeDate}>добавить дней</button>
 
 
@@ -323,7 +323,7 @@ function App() {
       {
         download && (
           <a
-            className='link'
+            className='link button'
             download={'ля че наделал.reg'}
             href={download}
           >

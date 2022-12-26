@@ -75,9 +75,10 @@
 }
 
 .link {
+  display: inline-block;
   cursor: pointer;
-  padding: 4px 0;
-  font-weight: bold;
+  text-decoration: none;
+  background-color: green;
 }
 
 input {
@@ -88,5 +89,6 @@ input {
 }
 
 .inputDate {
-  width: 100px;
+  width: 150px;
+  color: white;
 }
