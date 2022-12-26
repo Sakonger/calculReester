@@ -245,29 +245,72 @@ function App() {
     <div className="App">
       <h1> Я сделяль </h1>
       <input  type='file' onChange={onChange}></input>
-      <button className='btn' onClick={() => setSelectedId(0)}>назад</button>
-      {/* <button onClick={сalсulated}>накакай на меня</button> */}
-      {/* {version.map((n) => <option value={n} selected={this.state.selected === n}>{n}</option>)} */}
 
-      {selectedId ? (
-        <div>
-          <ul>
-            {file[selectedId].map((element) =>
-              <li>
-                {element.map((element) =>
-                  <span>
-                    {element}
-                  </span>)}
-                <br />
-              </li>)}
-          </ul>
-        </div>
-        ) : (
-          <ol >
-            {file.map((element, i) =>
-              <li onClick={() => сalсulated(i)} className='li'>
-                <ul>
+        <button className='btn' onClick={() => setSelectedId(0)}>назад</button>
+        {/* <button onClick={сalсulated}>накакай на меня</button> */}
+        {/* {version.map((n) => <option value={n} selected={this.state.selected === n}>{n}</option>)} */}
+
+        {selectedId ? (
+          <div>
+            <ul>
+              {file[selectedId].map((element) =>
+                <li>
                   {element.map((element) =>
+                    <span>
+                      {element}
+                    </span>)}
+                  <br />
+                </li>)}
+            </ul>
+          </div>
+          ) : (
+            <ol >
+              {file.map((element, i) =>
+                <li onClick={() => сalсulated(i)} className='li'>
+                  <ul>
+                    {element.map((element) =>
+                      <li>
+                        {element.map((element) =>
+                          <span>
+                            {element}
+                          </span>)}
+                        <br />
+                      </li>)}
+                  </ul>
+                </li>
+              )}
+            </ol>
+          )
+        }
+      {selectedId && (
+        <div>
+          <div className='info'>
+            <div >{data.number} Старая лицензия</div>
+            <div>{total} Новая лицензия</div>
+            <div>{ExcelDateToJSDate(data.dataLic).toLocaleDateString()} Дата лицензии</div>
+            <div>{data.version} Старая версия</div>
+          </div>
+
+
+          <button className='button' onClick={changeNumber}>меняем лицензию</button>
+          <input placeholder='вводи дни' className='button inputDate' onChange={(e) => setInputDate(e.target.value)} type='number'></input>
+          <button className='button' onClick={changeDate}>добавить дней</button>
+
+
+            <select className='button select' onChange={choiceVersions}>
+              <option value={'Industrial'}>Industrial</option>
+              <option value={'Educational1'}>Educational</option>
+              <option value={'Dealer'}>Dealer</option>
+              <option value={'Control'}>Control</option>
+              <option value={'Educational4'}>Educational</option>
+              <option value={'Educational5'}>Educational</option>
+              <option value={'Student'}>Student</option>
+          </select>
+
+          <div>
+              <div>
+                <ul>
+                  {newArr.map((element) =>
                     <li>
                       {element.map((element) =>
                         <span>
@@ -276,65 +319,27 @@ function App() {
                       <br />
                     </li>)}
                 </ul>
-              </li>
-            )}
-          </ol>
-        )
-      }
-    <div className='info'>
-      <div >{data.number} Старая лицензия</div>
-      <div>{total} Новая лицензия</div>
-      <div>{ExcelDateToJSDate(data.dataLic).toLocaleDateString()} Дата лицензии</div>
-      <div>{data.version} Старая версия</div>
-    </div>
+              </div>
+          </div>
 
-
-    <button className='button' onClick={changeNumber}>меняем лицензию</button>
-    <input placeholder='вводи дни' className='button inputDate' onChange={(e) => setInputDate(e.target.value)} type='number'></input>
-    <button className='button' onClick={changeDate}>добавить дней</button>
-
-
-      <select className='button select' onChange={choiceVersions}>
-        <option value={'Industrial'}>Industrial</option>
-        <option value={'Educational1'}>Educational</option>
-        <option value={'Dealer'}>Dealer</option>
-        <option value={'Control'}>Control</option>
-        <option value={'Educational4'}>Educational</option>
-        <option value={'Educational5'}>Educational</option>
-        <option value={'Student'}>Student</option>
-    </select>
-
-    <div>
-        <div>
-          <ul>
-            {newArr.map((element) =>
-              <li>
-                {element.map((element) =>
-                  <span>
-                    {element}
-                  </span>)}
-                <br />
-              </li>)}
-          </ul>
+            <button className='button' onClick={getFile}>сгенерировать фаил</button>
+            <br/>
+            {
+              download && (
+                <a
+                  className='link button'
+                  download={'ля че наделал.reg'}
+                  href={download}
+                >
+                  скачать фаил
+                </a>
+              )
+            }
         </div>
-    </div>
-
-      <button className='button' onClick={getFile}>получить строку</button>
-      {
-        download && (
-          <a
-            className='link button'
-            download={'ля че наделал.reg'}
-            href={download}
-          >
-            скачать фаил
-          </a>
-        )
-      }
-
+      )}
       <video className='korova' ref={vidos} controls width="400" height="300">
         <source src={korova} type="video/mp4"></source>
-    </video>
+      </video>
     </div>
   );
 }
