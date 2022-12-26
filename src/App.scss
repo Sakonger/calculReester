@@ -56,16 +56,18 @@
   justify-content: space-around;
   border: 2px solid gray;
   margin: 20px 0;
+
 }
 
 .button {
   cursor: pointer;
   height: 30px;
-  font-weight: bold;
-  border: 2px solid black;
+  border: none;
   border-radius: 15px;
-  background-color: grey;
+  background-color: rgb(36, 36, 36);
   margin: 0 10px;
+  padding: 0 15px;
+  color: white;
 }
 
 .select {
@@ -74,7 +76,17 @@
 
 .link {
   cursor: pointer;
-  border-bottom: 2px solid green;
   padding: 4px 0;
   font-weight: bold;
+}
+
+input {
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+}
+
+.inputDate {
+  width: 100px;
 }

@@ -1,25 +1,20 @@
 import { useState, useRef } from 'react';
 import { cloneDeep } from 'lodash';
 import korova from './korova.mp4';
-import './App.css';
+import './App.scss';
 
 function App() {
-
   const [file , setFile] = useState([])
-
   const [fileString, setFileString] = useState()
-
   const [selectedId, setSelectedId] = useState()
-
   const [data, setData] = useState({})
-
   const [newArr, setNewArr] = useState([])
-
   const [newVersion, setNewVersion] = useState()
-
   const [newNumber, setNewNumber] = useState()
-
   const [download, setDownload] = useState()
+  const [total, setTotal] = useState()
+  const [inputDate, setInputDate] = useState()
+  const [dateСalculation, setDateСalculation] = useState()
 
   const vidos = useRef()
 
@@ -84,10 +79,10 @@ function App() {
 
     const [z1, z2] = file[i][2][10].split('');
     const [z3, z4] = file[i][2][11].split('');
-    const y1 = z1 * 16;
-    const y2 = z2 * 1;
-    const y3 = z3 * 4096;
-    const y4 = z4 * 256;
+    const y1 = parseInt(z1, 16) * 16;
+    const y2 = parseInt(z2, 16) * 1;
+    const y3 = parseInt(z3, 16) * 4096;
+    const y4 = parseInt(z4, 16) * 256;
     const date = y1 + y2 +y3 +y4 + 25569
     console.log(y1, y2, y3, y4 ,date)
 
@@ -96,6 +91,8 @@ function App() {
       number: total,
       version: v,
       dataLic: date,
+      para1: file[i][2][10],
+      para2: file[i][2][11]
     })
 
     setNewArr(cloneDeep(file[i]))
@@ -179,6 +176,10 @@ function App() {
     arrForChanges[0][10] = n3;
     arrForChanges[0][11] = n4;
 
+    const newTotal = parseInt((n1 + n2 + n3 + n4), 16)
+
+    setTotal(newTotal)
+
     setNewArr(arrForChanges)
 
     // setNewNumber()
@@ -188,10 +189,14 @@ function App() {
   const changeDate = () => {
     const arrForChanges = cloneDeep(newArr)
 
-    const [p1, p2] = data.dataLic.toString(16).match(/.{1,2}/g)
+    const soedenil = data.para2 + data.para1
 
-    arrForChanges[2][10] = p1
-    arrForChanges[2][11] = p2
+    setData({ ...data, dataLic: Number(parseInt(soedenil, 16)) + Number(inputDate) + 25569})
+
+    const [l1, l2] = (Number(parseInt(soedenil, 16)) + Number(inputDate)).toString(16).match(/.{1,2}/g)
+
+    arrForChanges[2][10] = l2
+    arrForChanges[2][11] = l1
 
     setNewArr(arrForChanges)
   }
@@ -277,15 +282,16 @@ function App() {
         )
       }
     <div className='info'>
-      <div >{data.number} большое число говна</div>
-      <div>{data.dataLic} дата для Экселя</div>
-      <div>{ExcelDateToJSDate(data.dataLic).toLocaleDateString()}</div>
-      <div>{data.version} версия</div>
+      <div >{data.number} Старая лицензия</div>
+      <div>{total} Новая лицензия</div>
+      <div>{ExcelDateToJSDate(data.dataLic).toLocaleDateString()} Дата лицензии</div>
+      <div>{data.version} Старая версия</div>
     </div>
 
 
     <button className='button' onClick={changeNumber}>меняем лицензию</button>
-    <button className='button' onClick={changeDate}>Меняем дату</button>
+    <input className='button inputDate' onChange={(e) => setInputDate(e.target.value)} type='number'></input>
+    <button className='button' onClick={changeDate}>добавить дней</button>
 
 
       <select className='button select' onChange={choiceVersions}>
@@ -312,10 +318,20 @@ function App() {
           </ul>
         </div>
     </div>
+
       <button className='button' onClick={getFile}>получить строку</button>
-      <a className='link' download={'ля че наделал.reg'} href={download}>
-        скачать фаил
-      </a>
+      {
+        download && (
+          <a
+            className='link'
+            download={'ля че наделал.reg'}
+            href={download}
+          >
+            скачать фаил
+          </a>
+        )
+      }
+
       <video className='korova' ref={vidos} controls width="400" height="300">
         <source src={korova} type="video/mp4"></source>
     </video>
